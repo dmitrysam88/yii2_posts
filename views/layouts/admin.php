@@ -33,7 +33,10 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/admin/default/index']],
         ['label' => 'Посты', 'url' => ['/admin/post/index']],
-        ['label' => 'Пользователи', 'url' => ['/rbac/default/index']],
+        ['label' => 'Пользователи', 'url' => ['/rbac/default/index']]
+    ];
+
+    $menuItemsNext = [
         Yii::$app->user->isGuest ? (
         ['label' => 'Войти', 'url' => ['/site/login']]
         ) : (
@@ -48,6 +51,8 @@ AppAsset::register($this);
         )
     ];
 
+    $menuItems = array_merge(Helper::filter($menuItems),$menuItemsNext);
+
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
@@ -57,7 +62,7 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => Helper::filter($menuItems),
+        'items' => $menuItems,
     ]);
     NavBar::end();
     ?>
